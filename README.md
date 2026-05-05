@@ -18,6 +18,55 @@
 
 TrialCheck does not run experiments. It audits completed readouts from any experimentation platform, spreadsheet, or warehouse export and returns a structured PASS / WARN / FAIL report.
 
+## About
+
+Most experimentation platforms surface a p-value and a lift estimate. That is not enough information to make a trustworthy ship decision.
+
+Before shipping an experiment result, a senior data scientist checks a consistent set of questions: Did assignment work correctly? Was the result called early? Is the effect large enough to matter in practice? Did any guardrail metrics move harmfully? Were the variants balanced before the test started? These checks are well-understood, but they are rarely automated — they live in runbooks, reviewer checklists, or institutional memory.
+
+TrialCheck packages those checks into a single library call. It accepts a structured experiment summary (assignment counts, metric data, optional guardrails and pre-period covariates) and returns a per-check PASS / WARN / FAIL / INSUFFICIENT_INPUT report with recommendations. The result is readable by humans and parseable by machines (JSON, Markdown, HTML output).
+
+The intended use case: a data scientist or analytics lead runs TrialCheck at readout time, reviews the report, and makes a better-informed decision. TrialCheck is decision support — not a decision-maker.
+
+## Architecture
+
+```mermaid
+flowchart TD
+    IN["ExperimentSummary\nassignment counts · metric data\nguardrails · pre-period covariates"]
+
+    IN --> SRM
+    IN --> PMC
+    IN --> CMC
+    IN --> PSC
+    IN --> MDE
+    IN --> PKG
+    IN --> GRD
+    IN --> PPB
+
+    SRM["SRM Check\nchi-square df=1\nerfc(sqrt(x/2))"]
+    PMC["Primary Metric\ntwo-proportion z-test\npooled SE under H0"]
+    CMC["Continuous Metric\nWelch t-test\nWelch-Satterthwaite dof"]
+    PSC["Practical Significance\nobserved lift vs\nbusiness threshold"]
+    MDE["MDE Context\nobserved lift vs\nplanned MDE"]
+    PKG["Peeking Risk\nduration ratio\n+ interim looks"]
+    GRD["Guardrail Movement\nbad direction\n+ tolerance"]
+    PPB["Pre-period Balance\nSMD per covariate\npooled SD"]
+
+    SRM --> AGG
+    PMC --> AGG
+    CMC --> AGG
+    PSC --> AGG
+    MDE --> AGG
+    PKG --> AGG
+    GRD --> AGG
+    PPB --> AGG
+
+    AGG["Overall Status\nFAIL > WARN > INSUFFICIENT_INPUT > PASS"]
+    AGG --> OUT
+
+    OUT["TrialReport\nJSON · Markdown · HTML\nexplicit claim boundary"]
+```
+
 ## Why this exists
 
 A p-value alone is not enough to ship an experiment. Before acting on a readout, teams should check whether the result is trustworthy and decision-ready:
