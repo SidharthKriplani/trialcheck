@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.3.0] — 2026-05-06
+
+### Added
+- **Minimum Sample Size check** (`minimum_sample_size_check`). Warns when either
+  variant's n falls below the configurable `min_sample_size` threshold (default 100).
+  Evidence block includes `n_control`, `n_treatment`, and `min_n_threshold`.
+- **Novelty Effect Risk check** (`novelty_effect_check`). Warns when
+  `actual_duration_days` is below the configurable `novelty_effect_days` washout
+  window (default 7 days), flagging that early uplift may reflect curiosity rather
+  than sustained behaviour change.
+- Two new fields on `ExperimentSummary`: `min_sample_size` (default 100) and
+  `novelty_effect_days` (default 7).
+- 10 new tests across `MinimumSampleSizeTests` and `NoveltyEffectTests`.
+- `docs/prd/` directory with Interview Defense and PRD documents.
+
+### Changed
+- Both new checks are included in `TrialCheck.run()` by default.
+
 ## [0.2.0] — 2025-05-05
 
 ### Added

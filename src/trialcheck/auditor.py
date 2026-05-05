@@ -8,6 +8,8 @@ from .checks import (
     continuous_metric_check,
     guardrail_checks,
     mde_context_check,
+    minimum_sample_size_check,
+    novelty_effect_check,
     peeking_risk_check,
     practical_significance_check,
     pre_period_balance_checks,
@@ -37,12 +39,14 @@ class TrialCheck:
 
     def run(self) -> TrialReport:
         checks: List[CheckResult] = [
+            minimum_sample_size_check(self.experiment),
             srm_check(self.experiment),
             primary_metric_check(self.experiment),
             continuous_metric_check(self.experiment),
             practical_significance_check(self.experiment),
             mde_context_check(self.experiment),
             peeking_risk_check(self.experiment),
+            novelty_effect_check(self.experiment),
         ]
         checks.extend(guardrail_checks(self.experiment))
         checks.extend(pre_period_balance_checks(self.experiment))

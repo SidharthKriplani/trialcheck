@@ -275,5 +275,140 @@ class EdgeCaseTests(unittest.TestCase):
         self.assertEqual(report.overall_status, CheckStatus.PASS)
 
 
+class MinimumSampleSizeTests(unittest.TestCase):
+    """Tests for the minimum sample size check."""
+
+    def test_warn_when_control_below_threshold(self):
+        exp = ExperimentSummary(
+            experiment_id="tiny_control",
+            metric_name="conversion",
+            control=VariantSummary("control", n=50, conversions=5),
+            treatment=VariantSummary("treatment", n=1000, conversions=100),
+            min_sample_size=100,
+        )
+        report = TrialCheck(exp).run()
+        check = next(c for c in report.checks if c.check == "Minimum Sample Size")
+        self.assertEqual(check.status, CheckStatus.WARN)
+        self.assertEqual(check.evidence["min_n_threshold"], 100)
+
+    def test_warn_when_treatment_below_threshold(self):
+        exp = ExperimentSummary(
+            experiment_id="tiny_treatment",
+            metric_name="conversion",
+            control=VariantSummary("control", n=1000, conversions=100),
+            treatment=VariantSummary("treatment", n=40, conversions=4),
+            min_sample_size=100,
+        )
+        report = TrialCheck(exp).run()
+        check = next(c for c in report.checks if c.check == "Minimum Sample Size")
+        self.assertEqual(check.status, CheckStatus.WARN)
+
+    def test_pass_when_both_above_threshold(self):
+        exp = ExperimentSummary(
+            experiment_id="adequate_n",
+            metric_name="conversion",
+            control=VariantSummary("control", n=500, conversions=50),
+            treatment=VariantSummary("treatment", n=500, conversions=55),
+            min_sample_size=100,
+        )
+        report = TrialCheck(exp).run()
+        check = next(c for c in report.checks if c.check == "Minimum Sample Size")
+        self.assertEqual(check.status, CheckStatus.PASS)
+
+    def test_default_threshold_is_100(self):
+        exp = ExperimentSummary(
+            experiment_id="default_threshold",
+            metric_name="conversion",
+            control=VariantSummary("control", n=99, conversions=10),
+            treatment=VariantSummary("treatment", n=99, conversions=11),
+        )
+        report = TrialCheck(exp).run()
+        check = next(c for c in report.checks if c.check == "Minimum Sample Size")
+        self.assertEqual(check.status, CheckStatus.WARN)
+        self.assertEqual(check.evidence["min_n_threshold"], 100)
+
+    def test_evidence_contains_both_n_values(self):
+        exp = ExperimentSummary(
+            experiment_id="evidence_check",
+            metric_name="conversion",
+            control=VariantSummary("control", n=200, conversions=20),
+            treatment=VariantSummary("treatment", n=180, conversions=19),
+            min_sample_size=100,
+        )
+        report = TrialCheck(exp).run()
+        check = next(c for c in report.checks if c.check == "Minimum Sample Size")
+        self.assertEqual(check.evidence["n_control"], 200)
+        self.assertEqual(check.evidence["n_treatment"], 180)
+
+
+class NoveltyEffectTests(unittest.TestCase):
+    """Tests for the novelty effect risk check."""
+
+    def test_warn_when_duration_below_threshold(self):
+        exp = ExperimentSummary(
+            experiment_id="short_run",
+            metric_name="conversion",
+            control=VariantSummary("control", n=1000, conversions=100),
+            treatment=VariantSummary("treatment", n=1000, conversions=115),
+            actual_duration_days=3,
+            novelty_effect_days=7,
+        )
+        report = TrialCheck(exp).run()
+        check = next(c for c in report.checks if c.check == "Novelty Effect Risk")
+        self.assertEqual(check.status, CheckStatus.WARN)
+        self.assertEqual(check.evidence["actual_duration_days"], 3)
+
+    def test_pass_when_duration_meets_threshold(self):
+        exp = ExperimentSummary(
+            experiment_id="full_run",
+            metric_name="conversion",
+            control=VariantSummary("control", n=5000, conversions=500),
+            treatment=VariantSummary("treatment", n=5000, conversions=550),
+            actual_duration_days=14,
+            novelty_effect_days=7,
+        )
+        report = TrialCheck(exp).run()
+        check = next(c for c in report.checks if c.check == "Novelty Effect Risk")
+        self.assertEqual(check.status, CheckStatus.PASS)
+
+    def test_insufficient_input_when_duration_not_provided(self):
+        exp = ExperimentSummary(
+            experiment_id="no_duration",
+            metric_name="conversion",
+            control=VariantSummary("control", n=1000, conversions=100),
+            treatment=VariantSummary("treatment", n=1000, conversions=110),
+        )
+        report = TrialCheck(exp).run()
+        check = next(c for c in report.checks if c.check == "Novelty Effect Risk")
+        self.assertEqual(check.status, CheckStatus.INSUFFICIENT_INPUT)
+
+    def test_custom_novelty_threshold(self):
+        exp = ExperimentSummary(
+            experiment_id="custom_threshold",
+            metric_name="engagement",
+            control=VariantSummary("control", n=2000, conversions=200),
+            treatment=VariantSummary("treatment", n=2000, conversions=220),
+            actual_duration_days=10,
+            novelty_effect_days=14,
+        )
+        report = TrialCheck(exp).run()
+        check = next(c for c in report.checks if c.check == "Novelty Effect Risk")
+        self.assertEqual(check.status, CheckStatus.WARN)
+        self.assertEqual(check.evidence["novelty_effect_days"], 14)
+
+    def test_exact_threshold_boundary_passes(self):
+        exp = ExperimentSummary(
+            experiment_id="boundary",
+            metric_name="conversion",
+            control=VariantSummary("control", n=3000, conversions=300),
+            treatment=VariantSummary("treatment", n=3000, conversions=330),
+            actual_duration_days=7,
+            novelty_effect_days=7,
+        )
+        report = TrialCheck(exp).run()
+        check = next(c for c in report.checks if c.check == "Novelty Effect Risk")
+        self.assertEqual(check.status, CheckStatus.PASS)
+
+
 if __name__ == "__main__":
     unittest.main()

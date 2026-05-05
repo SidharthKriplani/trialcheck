@@ -82,6 +82,8 @@ class ExperimentSummary:
     interim_looks: int = 0
     mde: Optional[float] = None
     practical_threshold: Optional[float] = None
+    min_sample_size: int = 100
+    novelty_effect_days: int = 7
     guardrails: List[GuardrailMetric] = field(default_factory=list)
     pre_period_covariates: List[PrePeriodCovariate] = field(default_factory=list)
     metadata: Dict[str, Any] = field(default_factory=dict)

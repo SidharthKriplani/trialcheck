@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "trialcheck"
-version = "0.2.0"
+version = "0.3.0"
 description = "Platform-agnostic A/B experiment readout auditor with SRM, peeking, MDE, practical significance, Welch t-test, guardrail, and pre-period balance checks."
 readme = "README.md"
 requires-python = ">=3.9"

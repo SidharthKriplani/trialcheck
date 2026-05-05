@@ -10,6 +10,67 @@ from .models import CheckResult, CheckStatus, ExperimentSummary, GuardrailMetric
 from .stats import chi_square_df1_survival, two_proportion_z_test, welch_t_test
 
 
+def minimum_sample_size_check(exp: ExperimentSummary) -> CheckResult:
+    """Warn when either variant's sample size falls below the configured minimum."""
+    min_n = exp.min_sample_size
+    n_c, n_t = exp.control.n, exp.treatment.n
+    if n_c < min_n or n_t < min_n:
+        return CheckResult(
+            check="Minimum Sample Size",
+            status=CheckStatus.WARN,
+            detail=(
+                f"Control n={n_c}, treatment n={n_t}; minimum threshold={min_n}. "
+                "Small samples inflate variance and produce unreliable p-values."
+            ),
+            recommendation=(
+                "Continue the experiment until both variants reach the minimum sample size "
+                "required for the configured MDE and alpha."
+            ),
+            evidence={"n_control": n_c, "n_treatment": n_t, "min_n_threshold": min_n},
+        )
+    return CheckResult(
+        check="Minimum Sample Size",
+        status=CheckStatus.PASS,
+        detail=f"Control n={n_c}, treatment n={n_t}; both meet the minimum threshold of {min_n}.",
+        recommendation="Sample sizes meet the minimum threshold.",
+        evidence={"n_control": n_c, "n_treatment": n_t, "min_n_threshold": min_n},
+    )
+
+
+def novelty_effect_check(exp: ExperimentSummary) -> CheckResult:
+    """Warn when experiment runtime is shorter than the novelty-effect washout window."""
+    if exp.actual_duration_days is None:
+        return CheckResult(
+            check="Novelty Effect Risk",
+            status=CheckStatus.INSUFFICIENT_INPUT,
+            detail="actual_duration_days not provided; novelty effect cannot be assessed.",
+            recommendation="Provide actual_duration_days to enable this check.",
+        )
+    threshold = exp.novelty_effect_days
+    days = exp.actual_duration_days
+    if days < threshold:
+        return CheckResult(
+            check="Novelty Effect Risk",
+            status=CheckStatus.WARN,
+            detail=(
+                f"Experiment ran for {days} day(s); novelty washout threshold is {threshold} day(s). "
+                "Early uplift may reflect user curiosity rather than sustained behaviour change."
+            ),
+            recommendation=(
+                f"Allow at least {threshold} days before reading out to reduce novelty-effect bias. "
+                "Consider re-checking metrics after novelty effects dissipate."
+            ),
+            evidence={"actual_duration_days": days, "novelty_effect_days": threshold},
+        )
+    return CheckResult(
+        check="Novelty Effect Risk",
+        status=CheckStatus.PASS,
+        detail=f"Experiment ran for {days} day(s), meeting the {threshold}-day novelty washout window.",
+        recommendation="No novelty-effect risk detected under the configured threshold.",
+        evidence={"actual_duration_days": days, "novelty_effect_days": threshold},
+    )
+
+
 def srm_check(exp: ExperimentSummary) -> CheckResult:
     total = exp.control.n + exp.treatment.n
     if total <= 0:
