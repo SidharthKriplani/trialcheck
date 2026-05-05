@@ -132,3 +132,15 @@ Built **TrialCheck**, a platform-agnostic A/B experiment readout auditor that ch
 ## License
 
 MIT
+
+---
+
+## How This Connects
+
+TrialCheck is the **experiment validity gate** for the decision platforms in this portfolio:
+
+- **PulseRank:** Before accepting any A/B simulation result (e.g., the HOLD_SIMULATED decision on NDCG −7.9%), TrialCheck validates that the experiment had sufficient power, no SRM, and no multiple comparison inflation. Without this gate, the HOLD decision could be based on an underpowered test.
+- **MetaSignal:** MetaSignal produces the experiment outcomes; TrialCheck audits whether those outcomes are trustworthy. MetaSignal's CUPED variance reduction is validated by TrialCheck's power analysis — did CUPED actually bring the required sample size within the available experiment window?
+- **RiskFrame:** A/B tests on threshold policy changes (e.g., v1.0 vs. v1.1 approval rate comparison) pass through TrialCheck to confirm the difference is statistically significant before the policy is locked.
+
+TrialCheck is framework-agnostic by design — it accepts any JSON experiment results file conforming to the documented schema.
