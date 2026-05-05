@@ -1,0 +1,126 @@
+{
+  "experiment_id": "checkout-ui-v2-guardrail",
+  "metric_name": "checkout_conversion_rate",
+  "overall_status": "FAIL",
+  "interpretation": "Readout is not action-ready: 2 failure(s), 0 warning(s), and 1 insufficient-input check(s). Investigate failed checks before using the result.",
+  "metadata": {
+    "tool": "trialcheck",
+    "version": "0.2.0",
+    "claim_boundary": "Audit helper only; does not guarantee causal validity or make shipping decisions."
+  },
+  "checks": [
+    {
+      "check": "Sample Ratio Mismatch",
+      "status": "PASS",
+      "detail": "Observed split 15000/15000; expected split 15000.0/15000.0. SRM chi-square=0.0000, p=1.000000.",
+      "recommendation": "No SRM detected under the configured alpha threshold.",
+      "evidence": {
+        "control_n": 15000,
+        "treatment_n": 15000,
+        "expected_control_ratio": 0.5,
+        "chi_square": 0.0,
+        "p_value": 1.0,
+        "alpha": 0.05
+      }
+    },
+    {
+      "check": "Primary Metric Statistical Readout",
+      "status": "PASS",
+      "detail": "Control rate=9.0000%; treatment rate=10.2000%; absolute lift=1.2000%; relative lift=13.33%; p=0.000419.",
+      "recommendation": "Primary metric is statistically distinguishable at the configured alpha; still review practical size, SRM, peeking, and guardrails.",
+      "evidence": {
+        "control_rate": 0.09,
+        "treatment_rate": 0.102,
+        "absolute_lift": 0.012,
+        "relative_lift": 0.13333333,
+        "z_stat": 3.527703,
+        "p_value": 0.00041918,
+        "alpha": 0.05
+      }
+    },
+    {
+      "check": "Continuous Metric (Welch t-test)",
+      "status": "PASS",
+      "detail": "Control mean=4.82 \u00b1 2.3 (n=15000); treatment mean=4.91 \u00b1 2.28 (n=15000); absolute lift=0.09; Welch t=3.4036; dof=29995.7; p=0.000665.",
+      "recommendation": "Continuous metric is statistically distinguishable at the configured alpha; still review practical size, SRM, peeking, and guardrails.",
+      "evidence": {
+        "control_mean": 4.82,
+        "treatment_mean": 4.91,
+        "absolute_lift": 0.09,
+        "relative_lift": 0.0186722,
+        "t_stat": 3.403561,
+        "dof": 29995.71,
+        "p_value": 0.00066514,
+        "alpha": 0.05
+      }
+    },
+    {
+      "check": "Practical Significance",
+      "status": "PASS",
+      "detail": "Absolute lift=1.2000%; practical threshold=0.8000%.",
+      "recommendation": "Observed movement meets the configured practical threshold.",
+      "evidence": {
+        "absolute_lift": 0.012,
+        "practical_threshold": 0.008,
+        "meets_threshold": true
+      }
+    },
+    {
+      "check": "MDE Context",
+      "status": "PASS",
+      "detail": "Observed absolute lift=1.2000%; planned MDE=0.9000%.",
+      "recommendation": "Observed movement is at least as large as the planned MDE.",
+      "evidence": {
+        "absolute_lift": 0.012,
+        "mde": 0.009
+      }
+    },
+    {
+      "check": "Peeking / Early Readout Risk",
+      "status": "PASS",
+      "detail": "Actual duration was 100.0% of planned duration and no interim looks were reported.",
+      "recommendation": "No simple peeking warning detected from provided timing metadata.",
+      "evidence": {
+        "planned_duration_days": 14,
+        "actual_duration_days": 14,
+        "completion_ratio": 1.0,
+        "interim_looks": 0
+      }
+    },
+    {
+      "check": "Guardrail: revenue_per_user",
+      "status": "FAIL",
+      "detail": "revenue_per_user control=4.82, treatment=4.61; movement=-0.21; tolerance=0.05.",
+      "recommendation": "Guardrail decreased beyond tolerance by 0.16; review before shipping.",
+      "evidence": {
+        "control_value": 4.82,
+        "treatment_value": 4.61,
+        "movement": -0.20999999999999996,
+        "bad_direction": "decrease",
+        "tolerance": 0.05,
+        "unit": "USD"
+      }
+    },
+    {
+      "check": "Guardrail: refund_rate",
+      "status": "FAIL",
+      "detail": "refund_rate control=0.02, treatment=0.038; movement=0.018; tolerance=0.005.",
+      "recommendation": "Guardrail increased beyond tolerance by 0.013; review before shipping.",
+      "evidence": {
+        "control_value": 0.02,
+        "treatment_value": 0.038,
+        "movement": 0.018,
+        "bad_direction": "increase",
+        "tolerance": 0.005,
+        "unit": "rate"
+      }
+    },
+    {
+      "check": "Pre-period Balance",
+      "status": "INSUFFICIENT_INPUT",
+      "detail": "No pre-period covariates were provided.",
+      "recommendation": "Provide pre-period covariate summaries when available, especially for high-impact experiments.",
+      "evidence": {}
+    }
+  ]
+}

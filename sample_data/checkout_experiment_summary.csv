@@ -1,0 +1,2 @@
+experiment_id,metric_name,control_n,control_conversions,treatment_n,treatment_conversions,expected_control_ratio,alpha,planned_duration_days,actual_duration_days,interim_looks,mde,practical_threshold
+checkout_copy_test_v0,checkout_conversion_rate,10000,1100,9800,1186,0.5,0.05,21,15,2,0.05,0.02

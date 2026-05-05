@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TrialCheck Audit Report — checkout-ui-v2-srm</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif; margin: 40px; color: #172033; }
+    .card { border: 1px solid #d7dce5; border-radius: 16px; padding: 24px; max-width: 1100px; box-shadow: 0 8px 24px rgba(20,30,50,.08); }
+    h1 { margin-top: 0; }
+    .status { display: inline-block; padding: 6px 10px; border-radius: 999px; background: #f2f4f8; font-weight: 700; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    th, td { border-bottom: 1px solid #e8ebf1; padding: 10px; text-align: left; vertical-align: top; }
+    th { background: #f8fafc; }
+    code { font-weight: 700; }
+    .boundary { margin-top: 24px; padding: 14px; border-radius: 12px; background: #fff8e7; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>TrialCheck Audit Report</h1>
+    <p><strong>Experiment:</strong> checkout-ui-v2-srm</p>
+    <p><strong>Metric:</strong> checkout_conversion_rate</p>
+    <p><strong>Overall status:</strong> <span class="status">FAIL</span></p>
+    <h2>Interpretation</h2>
+    <p>Readout is not action-ready: 1 failure(s), 0 warning(s), and 3 insufficient-input check(s). Investigate failed checks before using the result.</p>
+    <h2>Checks</h2>
+    <table>
+      <thead><tr><th>Check</th><th>Status</th><th>Detail</th><th>Recommendation</th></tr></thead>
+      <tbody><tr><td>Sample Ratio Mismatch</td><td><code>FAIL</code></td><td>Observed split 14100/10900; expected split 12500.0/12500.0. SRM chi-square=409.6000, p=0.000000.</td><td>Investigate assignment, logging, or filtering before using this result.</td></tr><tr><td>Primary Metric Statistical Readout</td><td><code>PASS</code></td><td>Control rate=9.0000%; treatment rate=10.5046%; absolute lift=1.5046%; relative lift=16.72%; p=0.000065.</td><td>Primary metric is statistically distinguishable at the configured alpha; still review practical size, SRM, peeking, and guardrails.</td></tr><tr><td>Continuous Metric (Welch t-test)</td><td><code>INSUFFICIENT_INPUT</code></td><td>Mean and/or std not provided; continuous metric check skipped.</td><td>Supply mean, std, and n for both variants to enable Welch&#x27;s t-test.</td></tr><tr><td>Practical Significance</td><td><code>PASS</code></td><td>Absolute lift=1.5046%; practical threshold=0.8000%.</td><td>Observed movement meets the configured practical threshold.</td></tr><tr><td>MDE Context</td><td><code>PASS</code></td><td>Observed absolute lift=1.5046%; planned MDE=0.9000%.</td><td>Observed movement is at least as large as the planned MDE.</td></tr><tr><td>Peeking / Early Readout Risk</td><td><code>PASS</code></td><td>Actual duration was 100.0% of planned duration and no interim looks were reported.</td><td>No simple peeking warning detected from provided timing metadata.</td></tr><tr><td>Guardrail Movement</td><td><code>INSUFFICIENT_INPUT</code></td><td>No guardrail metrics were provided.</td><td>Provide guardrails such as revenue per user, refund rate, latency, session quality, or support contacts before shipping decisions.</td></tr><tr><td>Pre-period Balance</td><td><code>INSUFFICIENT_INPUT</code></td><td>No pre-period covariates were provided.</td><td>Provide pre-period covariate summaries when available, especially for high-impact experiments.</td></tr></tbody>
+    </table>
+    <div class="boundary"><strong>Claim boundary:</strong> TrialCheck audits common readout risks. It does not run experiments, prove causality, replace an experimentation platform, or make shipping decisions automatically.</div>
+  </main>
+</body>
+</html>

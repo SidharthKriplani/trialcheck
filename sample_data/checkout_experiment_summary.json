@@ -1,0 +1,65 @@
+{
+  "experiment_id": "checkout_copy_test_v0",
+  "metric_name": "checkout_conversion_rate",
+  "control": {
+    "name": "control",
+    "n": 10000,
+    "conversions": 1100
+  },
+  "treatment": {
+    "name": "treatment",
+    "n": 9800,
+    "conversions": 1186
+  },
+  "expected_control_ratio": 0.5,
+  "alpha": 0.05,
+  "planned_duration_days": 21,
+  "actual_duration_days": 15,
+  "interim_looks": 2,
+  "mde": 0.05,
+  "practical_threshold": 0.02,
+  "guardrails": [
+    {
+      "name": "refund_rate",
+      "control_value": 0.021,
+      "treatment_value": 0.028,
+      "bad_direction": "increase",
+      "tolerance": 0.003,
+      "unit": "absolute_rate"
+    },
+    {
+      "name": "revenue_per_user",
+      "control_value": 12.8,
+      "treatment_value": 12.6,
+      "bad_direction": "decrease",
+      "tolerance": 0.5,
+      "unit": "currency"
+    }
+  ],
+  "pre_period_covariates": [
+    {
+      "name": "pre_period_orders_per_user",
+      "control_mean": 1.42,
+      "treatment_mean": 1.45,
+      "control_std": 0.9,
+      "treatment_std": 0.92,
+      "control_n": 10000,
+      "treatment_n": 9800,
+      "max_abs_smd": 0.1
+    },
+    {
+      "name": "pre_period_revenue_per_user",
+      "control_mean": 11.9,
+      "treatment_mean": 13.1,
+      "control_std": 6.0,
+      "treatment_std": 6.2,
+      "control_n": 10000,
+      "treatment_n": 9800,
+      "max_abs_smd": 0.1
+    }
+  ],
+  "metadata": {
+    "owner": "growth_data_science",
+    "source": "synthetic_demo"
+  }
+}

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TrialCheck Audit Report — checkout_copy_test_v0</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif; margin: 40px; color: #172033; }
+    .card { border: 1px solid #d7dce5; border-radius: 16px; padding: 24px; max-width: 1100px; box-shadow: 0 8px 24px rgba(20,30,50,.08); }
+    h1 { margin-top: 0; }
+    .status { display: inline-block; padding: 6px 10px; border-radius: 999px; background: #f2f4f8; font-weight: 700; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    th, td { border-bottom: 1px solid #e8ebf1; padding: 10px; text-align: left; vertical-align: top; }
+    th { background: #f8fafc; }
+    code { font-weight: 700; }
+    .boundary { margin-top: 24px; padding: 14px; border-radius: 12px; background: #fff8e7; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>TrialCheck Audit Report</h1>
+    <p><strong>Experiment:</strong> checkout_copy_test_v0</p>
+    <p><strong>Metric:</strong> checkout_conversion_rate</p>
+    <p><strong>Overall status:</strong> <span class="status">FAIL</span></p>
+    <h2>Interpretation</h2>
+    <p>Readout is not action-ready: 1 failure(s), 5 warning(s), and 1 insufficient-input check(s). Investigate failed checks before using the result.</p>
+    <h2>Checks</h2>
+    <table>
+      <thead><tr><th>Check</th><th>Status</th><th>Detail</th><th>Recommendation</th></tr></thead>
+      <tbody><tr><td>Sample Ratio Mismatch</td><td><code>PASS</code></td><td>Observed split 10000/9800; expected split 9900.0/9900.0. SRM chi-square=2.0202, p=0.155218.</td><td>No SRM detected under the configured alpha threshold.</td></tr><tr><td>Primary Metric Statistical Readout</td><td><code>PASS</code></td><td>Control rate=11.0000%; treatment rate=12.1020%; absolute lift=1.1020%; relative lift=10.02%; p=0.015261.</td><td>Primary metric is statistically distinguishable at the configured alpha; still review practical size, SRM, peeking, and guardrails.</td></tr><tr><td>Continuous Metric (Welch t-test)</td><td><code>INSUFFICIENT_INPUT</code></td><td>Mean and/or std not provided; continuous metric check skipped.</td><td>Supply mean, std, and n for both variants to enable Welch&#x27;s t-test.</td></tr><tr><td>Practical Significance</td><td><code>WARN</code></td><td>Absolute lift=1.1020%; practical threshold=2.0000%.</td><td>The result may be statistically interesting but is smaller than the configured business threshold.</td></tr><tr><td>MDE Context</td><td><code>WARN</code></td><td>Observed absolute lift=1.1020%; planned MDE=5.0000%.</td><td>Observed movement is below the planned MDE; be careful treating this as a meaningful win.</td></tr><tr><td>Peeking / Early Readout Risk</td><td><code>WARN</code></td><td>2 interim look(s) were reported.</td><td>Do not treat a conventional p-value as final unless the design accounted for early stopping or repeated looks.</td></tr><tr><td>Guardrail: refund_rate</td><td><code>FAIL</code></td><td>refund_rate control=0.021, treatment=0.028; movement=0.007; tolerance=0.003.</td><td>Guardrail increased beyond tolerance by 0.004; review before shipping.</td></tr><tr><td>Guardrail: revenue_per_user</td><td><code>PASS</code></td><td>revenue_per_user control=12.8, treatment=12.6; movement=-0.2; tolerance=0.5.</td><td>No harmful guardrail movement beyond the configured tolerance.</td></tr><tr><td>Pre-period Balance Summary</td><td><code>WARN</code></td><td>Checked 2 covariate(s); mean absolute SMD=0.1148; max absolute SMD=0.1967.</td><td>Review individual covariate rows for imbalance details.</td></tr><tr><td>Pre-period Balance: pre_period_orders_per_user</td><td><code>PASS</code></td><td>Standardized mean difference=0.0330; threshold=0.1000.</td><td>No material imbalance detected for this covariate under the configured SMD threshold.</td></tr><tr><td>Pre-period Balance: pre_period_revenue_per_user</td><td><code>WARN</code></td><td>Standardized mean difference=0.1967; threshold=0.1000.</td><td>Covariate imbalance detected; consider stratified analysis, regression adjustment, or platform assignment review.</td></tr></tbody>
+    </table>
+    <div class="boundary"><strong>Claim boundary:</strong> TrialCheck audits common readout risks. It does not run experiments, prove causality, replace an experimentation platform, or make shipping decisions automatically.</div>
+  </main>
+</body>
+</html>
