@@ -12,6 +12,6 @@ python scripts/generate_demo_reports.py
 
 Result:
 
-- Unit tests: 6/6 passing
-- Demo reports generated: JSON, Markdown, HTML
-- Example overall status: FAIL, due to a deliberately breached refund-rate guardrail and multiple WARN-level readout risks
+- Unit tests: 17/17 passing (TrialCheckTests: 6, ContinuousMetricTests: 5, EdgeCaseTests: 6)
+- Demo scenarios: clean_pass=PASS, srm_fail=FAIL, peeking_warn=WARN, guardrail_harm=FAIL
+- Canonical checkout experiment overall status: FAIL (deliberately breached refund-rate guardrail, peeking risk, effect below planned MDE)

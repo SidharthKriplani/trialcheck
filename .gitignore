@@ -9,4 +9,8 @@ build/
 dist/
 *.egg-info/
 .DS_Store
+outputs/*.json
+outputs/*.md
+outputs/*.html
 outputs/*.tmp
+github_push.sh
