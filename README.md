@@ -108,6 +108,10 @@ Built **TrialCheck**, a platform-agnostic A/B experiment readout auditor that ch
 - CUPED / variance reduction pre-processing hook
 - CSV batch audit mode for multiple experiments
 
+## Interview Defense
+
+[📄 TrialCheck_Interview_Defense_v2.pdf](docs/defense/TrialCheck_Interview_Defense_v2.pdf) — covers SRM chi-square derivation, peeking risk model, MDE power analysis, two-proportion z-test and Welch's t-test mechanics, guardrail movement thresholds, and SMD covariate imbalance methodology.
+
 ## License
 
 MIT
