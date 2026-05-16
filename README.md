@@ -1,6 +1,6 @@
 # TrialCheck
 
-**Platform-agnostic A/B experiment readout auditor.**
+> Platform-agnostic A/B experiment readout auditor. Catches SRM, peeking violations, underpowered tests, and guardrail regressions before you ship a wrong decision.
 
 <p>
   <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/SidharthKriplani/trialcheck/ci.yml?branch=main&label=CI&style=for-the-badge&logo=githubactions&logoColor=white">
@@ -30,7 +30,7 @@ TrialCheck audits completed A/B experiment readouts and returns a structured PAS
 
 ---
 
-## About
+## The Problem
 
 The problem is not that teams don't know what to check before shipping an experiment. Senior data scientists have a consistent mental checklist: Did assignment work? Was this called early? Is the lift real and large enough to matter? Did any guardrail move in the wrong direction? Were groups balanced before the test started?
 
