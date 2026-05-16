@@ -1,0 +1,127 @@
+<svg viewBox="0 0 1100 480" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="480" fill="url(#bg)"/>
+
+  <!-- Title bar -->
+  <text x="550" y="32" text-anchor="middle" font-size="15" font-weight="700" fill="#94a3b8" letter-spacing="3">TRIALCHECK · A/B EXPERIMENT READOUT AUDITOR</text>
+
+  <!-- INPUT NODE -->
+  <rect x="20" y="58" width="192" height="150" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="116" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="#e2e8f0">ExperimentSummary</text>
+  <line x1="30" y1="90" x2="202" y2="90" stroke="#475569" stroke-width="0.8"/>
+  <text x="116" y="108" text-anchor="middle" font-size="10" fill="#94a3b8">assignment_counts</text>
+  <text x="116" y="122" text-anchor="middle" font-size="10" fill="#94a3b8">metric_outcomes</text>
+  <text x="116" y="136" text-anchor="middle" font-size="10" fill="#94a3b8">guardrails · covariates</text>
+  <text x="116" y="150" text-anchor="middle" font-size="10" fill="#94a3b8">durations · alpha · MDE</text>
+  <rect x="44" y="164" width="144" height="22" rx="4" fill="#0f172a"/>
+  <text x="116" y="179" text-anchor="middle" font-size="9.5" fill="#64748b">INPUT</text>
+
+  <!-- Arrow: INPUT -> ENGINE -->
+  <line x1="212" y1="133" x2="262" y2="133" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- AUDIT ENGINE -->
+  <rect x="265" y="50" width="540" height="365" rx="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.8" filter="url(#shadow)"/>
+  <text x="535" y="76" text-anchor="middle" font-size="14" font-weight="700" fill="#3b82f6">TrialCheck Engine</text>
+  <line x1="275" y1="85" x2="795" y2="85" stroke="#3b82f6" stroke-width="0.8" stroke-opacity="0.5"/>
+
+  <!-- Group 1: Randomization -->
+  <text x="283" y="106" font-size="10" font-weight="700" fill="#94a3b8">&#9312; Randomization</text>
+  <rect x="283" y="112" width="182" height="52" rx="4" fill="#0f172a"/>
+  <text x="374" y="133" text-anchor="middle" font-size="10" font-weight="600" fill="#e2e8f0">sample_ratio_mismatch</text>
+  <text x="374" y="150" text-anchor="middle" font-size="9" fill="#64748b">chi-squared · p-value threshold</text>
+  <rect x="473" y="112" width="182" height="52" rx="4" fill="#0f172a"/>
+  <text x="564" y="133" text-anchor="middle" font-size="10" font-weight="600" fill="#e2e8f0">pre_experiment_balance</text>
+  <text x="564" y="150" text-anchor="middle" font-size="9" fill="#64748b">SMD · pooled SD · covariates</text>
+  <rect x="663" y="112" width="128" height="52" rx="4" fill="#0f172a"/>
+  <text x="727" y="136" text-anchor="middle" font-size="9" fill="#475569">group equivalence</text>
+  <text x="727" y="150" text-anchor="middle" font-size="9" fill="#475569">before exposure</text>
+
+  <!-- Group 2: Statistical Validity -->
+  <text x="283" y="188" font-size="10" font-weight="700" fill="#94a3b8">&#9313; Statistical Validity</text>
+  <rect x="283" y="194" width="165" height="52" rx="4" fill="#0f172a"/>
+  <text x="365" y="215" text-anchor="middle" font-size="10" font-weight="600" fill="#e2e8f0">primary_metric</text>
+  <text x="365" y="229" text-anchor="middle" font-size="10" font-weight="600" fill="#e2e8f0">_significance</text>
+  <text x="365" y="242" text-anchor="middle" font-size="9" fill="#64748b">p-value + 95% CI</text>
+  <rect x="456" y="194" width="165" height="52" rx="4" fill="#0f172a"/>
+  <text x="538" y="215" text-anchor="middle" font-size="10" font-weight="600" fill="#e2e8f0">continuous_metric</text>
+  <text x="538" y="229" text-anchor="middle" font-size="10" font-weight="600" fill="#e2e8f0">_ttest</text>
+  <text x="538" y="242" text-anchor="middle" font-size="9" fill="#64748b">Welch t-test · Satterthwaite df</text>
+  <rect x="629" y="194" width="162" height="52" rx="4" fill="#0f172a"/>
+  <text x="710" y="215" text-anchor="middle" font-size="10" font-weight="600" fill="#e2e8f0">peeking_risk</text>
+  <text x="710" y="230" text-anchor="middle" font-size="9" fill="#64748b">duration ratio vs planned</text>
+  <text x="710" y="242" text-anchor="middle" font-size="9" fill="#64748b">interim look count</text>
+
+  <!-- Group 3: Practical Readiness -->
+  <text x="283" y="270" font-size="10" font-weight="700" fill="#94a3b8">&#9314; Practical Readiness</text>
+  <rect x="283" y="276" width="160" height="52" rx="4" fill="#0f172a"/>
+  <text x="363" y="297" text-anchor="middle" font-size="10" font-weight="600" fill="#e2e8f0">practical_significance</text>
+  <text x="363" y="313" text-anchor="middle" font-size="9" fill="#64748b">observed lift vs MDE</text>
+  <rect x="451" y="276" width="160" height="52" rx="4" fill="#0f172a"/>
+  <text x="531" y="297" text-anchor="middle" font-size="10" font-weight="600" fill="#e2e8f0">guardrail_violations</text>
+  <text x="531" y="313" text-anchor="middle" font-size="9" fill="#64748b">secondary metrics · direction</text>
+  <rect x="619" y="276" width="172" height="52" rx="4" fill="#0f172a"/>
+  <text x="705" y="297" text-anchor="middle" font-size="10" font-weight="600" fill="#e2e8f0">minimum_sample_size</text>
+  <text x="705" y="313" text-anchor="middle" font-size="9" fill="#64748b">achieved vs required</text>
+
+  <!-- Engine footer -->
+  <text x="535" y="358" text-anchor="middle" font-size="9.5" fill="#475569">7 deterministic checks · stdlib only · 0 dependencies · explicit claim boundary on every report</text>
+
+  <!-- Arrows: ENGINE -> OUTPUTS -->
+  <line x1="805" y1="105" x2="852" y2="105" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="805" y1="220" x2="852" y2="220" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="805" y1="335" x2="852" y2="335" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- OUTPUT 1: Overall Status -->
+  <rect x="855" y="68" width="222" height="72" rx="8" fill="#14532d" stroke="#22c55e" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="966" y="91" text-anchor="middle" font-size="12" font-weight="700" fill="#22c55e">Overall Status</text>
+  <line x1="865" y1="99" x2="1067" y2="99" stroke="#22c55e" stroke-width="0.8" stroke-opacity="0.4"/>
+  <text x="966" y="115" text-anchor="middle" font-size="9.5" fill="#86efac">FAIL · WARN · PASS</text>
+  <text x="966" y="129" text-anchor="middle" font-size="9.5" fill="#86efac">INSUFFICIENT_INPUT</text>
+
+  <!-- OUTPUT 2: TrialReport -->
+  <rect x="855" y="183" width="222" height="72" rx="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="966" y="206" text-anchor="middle" font-size="12" font-weight="700" fill="#3b82f6">TrialReport</text>
+  <line x1="865" y1="214" x2="1067" y2="214" stroke="#3b82f6" stroke-width="0.8" stroke-opacity="0.4"/>
+  <text x="966" y="230" text-anchor="middle" font-size="9.5" fill="#93c5fd">JSON · Markdown · HTML</text>
+  <text x="966" y="244" text-anchor="middle" font-size="9.5" fill="#93c5fd">explicit claim boundary</text>
+
+  <!-- OUTPUT 3: CLI -->
+  <rect x="855" y="298" width="222" height="72" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="966" y="321" text-anchor="middle" font-size="12" font-weight="700" fill="#94a3b8">CLI / API</text>
+  <line x1="865" y1="329" x2="1067" y2="329" stroke="#475569" stroke-width="0.8" stroke-opacity="0.4"/>
+  <text x="966" y="345" text-anchor="middle" font-size="9.5" fill="#64748b">python -m trialcheck</text>
+  <text x="966" y="359" text-anchor="middle" font-size="9.5" fill="#64748b">audit(experiment_summary)</text>
+
+  <!-- Bottom stats bar -->
+  <rect x="20" y="432" width="1060" height="36" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+  <text x="95" y="449" text-anchor="middle" font-size="9" fill="#64748b">CHECKS</text>
+  <text x="95" y="462" text-anchor="middle" font-size="10" font-weight="700" fill="#3b82f6">7 deterministic</text>
+  <rect x="210" y="438" width="1" height="20" fill="#334155"/>
+  <text x="280" y="449" text-anchor="middle" font-size="9" fill="#64748b">DEPENDENCIES</text>
+  <text x="280" y="462" text-anchor="middle" font-size="10" font-weight="700" fill="#22c55e">0 (stdlib only)</text>
+  <rect x="380" y="438" width="1" height="20" fill="#334155"/>
+  <text x="460" y="449" text-anchor="middle" font-size="9" fill="#64748b">DEMO SCENARIOS</text>
+  <text x="460" y="462" text-anchor="middle" font-size="10" font-weight="700" fill="#f59e0b">4 included</text>
+  <rect x="560" y="438" width="1" height="20" fill="#334155"/>
+  <text x="630" y="449" text-anchor="middle" font-size="9" fill="#64748b">TESTS</text>
+  <text x="630" y="462" text-anchor="middle" font-size="10" font-weight="700" fill="#22c55e">17 passing</text>
+  <rect x="720" y="438" width="1" height="20" fill="#334155"/>
+  <text x="800" y="449" text-anchor="middle" font-size="9" fill="#64748b">PRD STATUS</text>
+  <text x="800" y="462" text-anchor="middle" font-size="10" font-weight="700" fill="#22c55e">PASS</text>
+  <rect x="900" y="438" width="1" height="20" fill="#334155"/>
+  <text x="980" y="449" text-anchor="middle" font-size="9" fill="#64748b">OUTPUT</text>
+  <text x="980" y="462" text-anchor="middle" font-size="10" font-weight="700" fill="#94a3b8">JSON · MD · HTML</text>
+</svg>

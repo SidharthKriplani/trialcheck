@@ -1,0 +1,140 @@
+<svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="500" fill="url(#bg)"/>
+
+  <!-- HEADER BAR -->
+  <rect x="0" y="0" width="1000" height="82" rx="0" fill="#451a03"/>
+  <rect x="0" y="74" width="1000" height="8" fill="#1e293b"/>
+
+  <!-- WARN badge -->
+  <rect x="20" y="18" width="60" height="26" rx="5" fill="#f59e0b"/>
+  <text x="50" y="36" text-anchor="middle" font-size="12" font-weight="800" fill="#1c0a00">WARN</text>
+
+  <!-- Issues flagged -->
+  <text x="90" y="31" font-size="11" fill="#fbbf24" font-weight="600">2 issues flagged</text>
+  <text x="90" y="46" font-size="9.5" fill="#78350f">readout requires review before shipping</text>
+
+  <!-- Title -->
+  <text x="500" y="30" text-anchor="middle" font-size="18" font-weight="700" fill="#fef3c7">TrialCheck Readout — Homepage Ranking A/B v3</text>
+  <text x="500" y="48" text-anchor="middle" font-size="10.5" fill="#d97706">21 days · 142,500 users · Trial-ID: TC-2024-0731 · 0.08ms</text>
+
+  <!-- Right meta -->
+  <text x="978" y="28" text-anchor="end" font-size="10" fill="#94a3b8">7/7 checks run</text>
+  <text x="978" y="44" text-anchor="end" font-size="10" fill="#22c55e">0 dependencies</text>
+  <text x="978" y="60" text-anchor="end" font-size="9" fill="#64748b">python -m trialcheck</text>
+
+  <!-- CARD 1: SRM CHECK — WARN -->
+  <rect x="18" y="96" width="300" height="260" rx="8" fill="#451a03" stroke="#f59e0b" stroke-width="1.5" filter="url(#shadow)"/>
+  <!-- Card header -->
+  <rect x="18" y="96" width="300" height="36" rx="8" fill="#78350f"/>
+  <rect x="18" y="114" width="300" height="18" fill="#78350f"/>
+  <text x="34" y="120" font-size="11" font-weight="700" fill="#fef3c7">SRM CHECK</text>
+  <rect x="240" y="102" width="66" height="22" rx="4" fill="#f59e0b"/>
+  <text x="273" y="117" text-anchor="middle" font-size="11" font-weight="800" fill="#1c0a00">WARN</text>
+
+  <text x="34" y="152" font-size="10.5" font-weight="600" fill="#fbbf24">chi-squared p = 0.031</text>
+  <line x1="28" y1="160" x2="308" y2="160" stroke="#78350f" stroke-width="0.8"/>
+
+  <text x="34" y="178" font-size="9.5" fill="#fef3c7">Expected:</text>
+  <text x="105" y="178" font-size="9.5" fill="#fbbf24">71,250 / 71,250</text>
+  <text x="34" y="194" font-size="9.5" fill="#fef3c7">Observed:</text>
+  <text x="105" y="194" font-size="9.5" fill="#fbbf24">71,891 / 70,609</text>
+
+  <line x1="28" y1="204" x2="308" y2="204" stroke="#78350f" stroke-width="0.8"/>
+
+  <text x="34" y="220" font-size="9.5" fill="#fed7aa">Borderline SRM — investigate assignment</text>
+  <text x="34" y="235" font-size="9.5" fill="#fed7aa">Could indicate bot traffic or sticky</text>
+  <text x="34" y="249" font-size="9.5" fill="#fed7aa">bucketing issue</text>
+
+  <line x1="28" y1="259" x2="308" y2="259" stroke="#78350f" stroke-width="0.8"/>
+
+  <rect x="28" y="268" width="280" height="22" rx="4" fill="#1c0a00"/>
+  <text x="168" y="283" text-anchor="middle" font-size="9.5" fill="#f59e0b">Assignment imbalance: +641 in treatment</text>
+
+  <rect x="28" y="298" width="280" height="40" rx="4" fill="#1c0a00"/>
+  <text x="168" y="315" text-anchor="middle" font-size="9" fill="#78350f">threshold: p &lt; 0.05</text>
+  <text x="168" y="329" text-anchor="middle" font-size="9" fill="#64748b">check_id: sample_ratio_mismatch</text>
+
+  <!-- CARD 2: PEEKING RISK — WARN -->
+  <rect x="344" y="96" width="300" height="260" rx="8" fill="#451a03" stroke="#f59e0b" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="344" y="96" width="300" height="36" rx="8" fill="#78350f"/>
+  <rect x="344" y="114" width="300" height="18" fill="#78350f"/>
+  <text x="360" y="120" font-size="11" font-weight="700" fill="#fef3c7">PEEKING RISK</text>
+  <rect x="566" y="102" width="66" height="22" rx="4" fill="#f59e0b"/>
+  <text x="599" y="117" text-anchor="middle" font-size="11" font-weight="800" fill="#1c0a00">WARN</text>
+
+  <text x="360" y="152" font-size="10.5" font-weight="600" fill="#fbbf24">Duration ratio: 0.71 (&lt; 1.0 planned)</text>
+  <line x1="354" y1="160" x2="634" y2="160" stroke="#78350f" stroke-width="0.8"/>
+
+  <text x="360" y="178" font-size="9.5" fill="#fef3c7">Interim looks:</text>
+  <text x="454" y="178" font-size="9.5" fill="#fbbf24">1 recorded</text>
+  <text x="360" y="194" font-size="9.5" fill="#fef3c7">Planned duration:</text>
+  <text x="464" y="194" font-size="9.5" fill="#fbbf24">30 days (ran 21)</text>
+
+  <line x1="354" y1="204" x2="634" y2="204" stroke="#78350f" stroke-width="0.8"/>
+
+  <text x="360" y="220" font-size="9.5" fill="#fed7aa">False discovery risk elevated</text>
+  <text x="360" y="235" font-size="9.5" fill="#fed7aa">Experiment called at 71% of planned</text>
+  <text x="360" y="249" font-size="9.5" fill="#fed7aa">duration</text>
+
+  <line x1="354" y1="259" x2="634" y2="259" stroke="#78350f" stroke-width="0.8"/>
+
+  <rect x="354" y="268" width="280" height="22" rx="4" fill="#1c0a00"/>
+  <text x="494" y="283" text-anchor="middle" font-size="9.5" fill="#f59e0b">Recommendation: extend to full planned duration</text>
+
+  <rect x="354" y="298" width="280" height="40" rx="4" fill="#1c0a00"/>
+  <text x="494" y="315" text-anchor="middle" font-size="9" fill="#78350f">early stopping inflates false positive rate</text>
+  <text x="494" y="329" text-anchor="middle" font-size="9" fill="#64748b">check_id: peeking_risk</text>
+
+  <!-- CARD 3: PRIMARY METRIC — PASS -->
+  <rect x="670" y="96" width="312" height="260" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="670" y="96" width="312" height="36" rx="8" fill="#14532d"/>
+  <rect x="670" y="114" width="312" height="18" fill="#14532d"/>
+  <text x="686" y="120" font-size="11" font-weight="700" fill="#dcfce7">PRIMARY METRIC</text>
+  <rect x="910" y="102" width="60" height="22" rx="4" fill="#22c55e"/>
+  <text x="940" y="117" text-anchor="middle" font-size="11" font-weight="800" fill="#052e16">PASS</text>
+
+  <text x="686" y="152" font-size="10.5" font-weight="600" fill="#22c55e">CTR: +1.8% (treatment vs control)</text>
+  <line x1="680" y1="160" x2="972" y2="160" stroke="#14532d" stroke-width="0.8"/>
+
+  <text x="686" y="178" font-size="9.5" fill="#dcfce7">p-value:</text>
+  <text x="748" y="178" font-size="9.5" fill="#22c55e">0.008 (threshold: 0.05)</text>
+  <text x="686" y="194" font-size="9.5" fill="#dcfce7">95% CI:</text>
+  <text x="732" y="194" font-size="9.5" fill="#22c55e">[+0.6%, +3.1%]</text>
+
+  <line x1="680" y1="204" x2="972" y2="204" stroke="#14532d" stroke-width="0.8"/>
+
+  <text x="686" y="220" font-size="9.5" fill="#bbf7d0">MDE: 1.2% · Observed lift: 1.8%</text>
+  <text x="686" y="235" font-size="9.5" fill="#bbf7d0">Lift exceeds planned MDE</text>
+  <text x="686" y="249" font-size="9.5" fill="#bbf7d0">Practical significance: PASS</text>
+
+  <line x1="680" y1="259" x2="972" y2="259" stroke="#14532d" stroke-width="0.8"/>
+
+  <rect x="680" y="268" width="282" height="22" rx="4" fill="#052e16"/>
+  <text x="821" y="283" text-anchor="middle" font-size="9.5" fill="#22c55e">Statistically and practically significant lift</text>
+
+  <rect x="680" y="298" width="282" height="40" rx="4" fill="#052e16"/>
+  <text x="821" y="315" text-anchor="middle" font-size="9" fill="#14532d">two-proportion z-test · pooled SE under H&#8320;</text>
+  <text x="821" y="329" text-anchor="middle" font-size="9" fill="#64748b">check_id: primary_metric_significance</text>
+
+  <!-- SUMMARY SECTION -->
+  <rect x="18" y="374" width="964" height="64" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+  <text x="34" y="395" font-size="10" font-weight="700" fill="#94a3b8">SUMMARY</text>
+  <text x="34" y="413" font-size="9.5" fill="#cbd5e1">Experiment shows significant lift but trust is reduced by SRM and early calling. Recommendation: Run full duration,</text>
+  <text x="34" y="428" font-size="9.5" fill="#cbd5e1">investigate assignment system, then re-evaluate. Ship decision deferred pending SRM investigation.</text>
+
+  <!-- FOOTER -->
+  <rect x="0" y="456" width="1000" height="44" fill="#0f172a"/>
+  <text x="500" y="474" text-anchor="middle" font-size="9.5" fill="#475569" letter-spacing="2">TRIALCHECK · A/B experiment readout auditor · Platform-agnostic · Zero dependencies</text>
+  <text x="500" y="490" text-anchor="middle" font-size="9" fill="#334155">github.com/SidharthKriplani/trialcheck</text>
+</svg>

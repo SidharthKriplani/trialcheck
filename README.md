@@ -18,6 +18,18 @@
 
 TrialCheck audits completed A/B experiment readouts and returns a structured PASS / WARN / FAIL report. It does not run experiments — it checks whether a finished one is trustworthy enough to act on.
 
+## Architecture
+
+![TrialCheck Architecture](docs/assets/architecture.svg)
+
+---
+
+## Sample Output
+
+![Sample Output](docs/assets/trial_report_sample.svg)
+
+---
+
 ## About
 
 The problem is not that teams don't know what to check before shipping an experiment. Senior data scientists have a consistent mental checklist: Did assignment work? Was this called early? Is the lift real and large enough to matter? Did any guardrail move in the wrong direction? Were groups balanced before the test started?
@@ -27,39 +39,6 @@ The problem is that this checklist lives in runbooks, reviewer notes, and instit
 TrialCheck packages that senior DS checklist into a library call. Feed it an experiment summary — assignment counts, metric outcomes, optional guardrails and pre-period data — and it runs every check at once, returns a structured per-check verdict, and surfaces the risks that would otherwise depend on who happens to be in the review meeting.
 
 This is decision support, not a decision-maker. TrialCheck tells you what the data says about readout quality. The ship/no-ship call is still yours.
-
-## Architecture
-
-```mermaid
-flowchart LR
-    IN["ExperimentSummary\n─────────────────\nassignment counts\nmetric outcomes\nguardrails · covariates\ndurations · alpha · MDE"]
-
-    subgraph RAND ["① Randomization"]
-        SRM["SRM\nchi² df=1 · erfc(√x/2)"]
-        PPB["Pre-period Balance\nSMD · pooled SD"]
-    end
-
-    subgraph STAT ["② Statistical Validity"]
-        PMC["Primary Metric\ntwo-proportion z-test\npooled SE under H₀"]
-        CMC["Continuous Metric\nWelch t-test\nWelch–Satterthwaite df"]
-        PKG["Peeking Risk\nduration ratio + interim looks"]
-    end
-
-    subgraph PRACTICAL ["③ Practical Readiness"]
-        PSC["Practical Significance\nobserved lift ≥ threshold?"]
-        MDE["MDE Context\nobserved lift ≥ planned MDE?"]
-        GRD["Guardrail Movement\nbad direction + tolerance band"]
-    end
-
-    IN --> RAND
-    IN --> STAT
-    IN --> PRACTICAL
-
-    RAND & STAT & PRACTICAL --> AGG
-
-    AGG["Overall Status\nFAIL › WARN › INSUFFICIENT_INPUT › PASS"]
-    AGG --> OUT["TrialReport\nJSON · Markdown · HTML\nexplicit claim boundary"]
-```
 
 ## The 7 checks
 
@@ -144,3 +123,17 @@ TrialCheck is the **experiment validity gate** for the decision platforms in thi
 - **RiskFrame:** A/B tests on threshold policy changes (e.g., v1.0 vs. v1.1 approval rate comparison) pass through TrialCheck to confirm the difference is statistically significant before the policy is locked.
 
 TrialCheck is framework-agnostic by design — it accepts any JSON experiment results file conforming to the documented schema.
+
+---
+
+## Part of Applied LLM Systems Portfolio
+
+This project is part of a portfolio targeting Applied LLM Systems Engineer roles.
+
+- [**NexusSupply**](https://github.com/SidharthKriplani/nexussupply) — Supplier Risk Intelligence Platform (LangGraph + FinBERT + XGBoost + Instructor + NetworkX)
+- [**LendFlow**](https://github.com/SidharthKriplani/lendflow) — AI-powered loan underwriting pipeline (LangGraph + RAG + FOIR rules engine)
+- [**AgentReliabilityLab**](https://github.com/SidharthKriplani/agentreliabilitylab) — Cyber threat triage agent (LangGraph + hybrid RAG + HITL + RAGAS eval)
+- [**RiskFrame Platform**](https://github.com/SidharthKriplani/riskframe_platform) — ML model lifecycle (XGBoost + LightGBM champion/challenger, Optuna HPO, drift monitoring)
+- [**DevPulse Platform**](https://github.com/SidharthKriplani/devpulse_platform) — Version-safe RAG migration intelligence (LLM-Last principle, conflict detection)
+- [**PulseRank Platform**](https://github.com/SidharthKriplani/pulserank_platform) — Marketplace ranking with IPS debiasing (position bias correction, delayed attribution)
+- [**MetaSignal Platform**](https://github.com/SidharthKriplani/metasignal_platform) — Experimentation intelligence (CUPED + guardrail-first + A/A calibration)
